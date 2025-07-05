@@ -1,0 +1,14 @@
+【入门1】顺序结构
+
+P5705 【深基2.例7】数字反转
+    printf/scanf高效数字反转：
+
+#include <cstdio>
+using namespace std;
+char a, b, c, d;
+int main(){
+	scanf("%c%c%c.%c", &a, &b, &c, &d);
+	printf("%c.%c%c%c", d, c, b, a);
+	return 0;
+}
+
