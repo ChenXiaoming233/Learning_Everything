@@ -7,11 +7,13 @@
 using namespace std;
  
 int main() {
-    std:vector<int> v(5,0);
-    size_t size = v.size();
-    int at1 = v.at(1);
-    int* vptr = v.data();
-    std::cout << &(v) << " " << vptr << " " << &v[0] << endl;
-    std::cout << v.size() << " " << v.capacity();
+    std::string a, b, slite, s;
+    int result;
+    a = "hajimi";
+    b = "0721";
+    result = a.compare(b);
+    getline(cin,s);
+    slite = s.substr(0,5);
+    cout << slite << " " << result << endl;
     return 0;
 }

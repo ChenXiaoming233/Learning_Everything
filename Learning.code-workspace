@@ -1,11 +1,20 @@
 {
-	"folders": [
-		{
-			"path": "Learning/C++"
-		},
-		{
-			"path": "Learning/Git"
-		}
-	],
-	"settings": {}
+  "folders": [
+    {
+      "path": "Learning/C++"
+    },
+    {
+      "path": "Learning/Algo"
+    },
+    {
+      "path": "Learning/Notes"
+    }
+  ],
+  "settings": {
+    "files.associations": {
+      "iostream": "cpp",
+      "string": "cpp",
+      "p1042": "cpp"
+    }
+  }
 }
