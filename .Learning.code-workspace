@@ -1,0 +1,20 @@
+{
+  "folders": [
+    {
+      "path": "C++"
+    },
+    {
+      "path": "Algo"
+    }
+  ],
+  "settings": {
+    "files.associations": {
+      "iostream": "cpp",
+      "string": "cpp",
+      "p1042": "cpp",
+      "ios": "cpp",
+      "complex": "cpp",
+      "ratio": "cpp"
+    }
+  }
+}
