@@ -1,11 +1,13 @@
 #include <iostream>
+#include <vector>
 #include <cstring>
-#define maxn 10000
+#include <algorithm>
 
 using namespace std;
 
-// 支持对大数的存储、加乘与输出，不支持直接输入大数
+#define maxn 2000
 
+// 支持对大数的存储、加乘与输出，不支持直接输入大数
 struct Bigint
 {
     int len;
@@ -18,9 +20,9 @@ struct Bigint
         memset(a, 0, sizeof(a)); // 重置数组 a[maxn] 为 0；
         do
         {
-            len++;
-            a[len] = x % 10; // 提取每位数字进入数组
-            x /= 10;         // 去除已经取出的一位数
+            a[++len] = x % 10; // 提取每位数字进入数组
+            x /= 10;           // 去除已经取出的一位数
+
         } while (x > 0); // x = 0 时提取完毕退出
     }
 
@@ -47,7 +49,7 @@ struct Bigint
         }
 
         // 去除前导0 但至少保留一位数，确定大数 len 的值
-        while (len > 1 and a[len] == 0) // 注意倒序！处理 len 的同时也将 len 作为循环操作数
+        while (len > 1 and a[len] == 0) // 注意倒序处理 len 的同时也将 len 作为循环操作数
         {
             len--;
         }
@@ -63,11 +65,11 @@ struct Bigint
 
 Bigint operator+(const Bigint &a, const Bigint &b)
 {
-    Bigint c;
+    Bigint c(0);
     int len = max(a.len, b.len); // c.len 为 c 的实际长度 由结构体自行管理，不应当直接操作，需另外新建变量 len 存储预估长度
     for (int i = 1; i <= len; i++)
     {
-        c[i] += a[i] + b[i];
+        c[i] += a[i] + b[i]; // 注意累加！保留原有进位
     }
     c.flatten(len + 1); // 答案不超过 len + 1 位数
     return c;
@@ -75,11 +77,11 @@ Bigint operator+(const Bigint &a, const Bigint &b)
 
 Bigint operator*(const Bigint &a, const int &b)
 {
-    Bigint c;
+    Bigint c(0);
     int len = a.len;
     for (int i = 1; i <= len; i++)
     {
-        c[i] += a[i] * b;
+        c[i] += a[i] * b; // 注意累加！保留原有进位
     }
     c.flatten(len + 11); // int 类型最长能存储 10 位数
     return c;
@@ -87,13 +89,15 @@ Bigint operator*(const Bigint &a, const int &b)
 
 int main()
 {
-    Bigint ans(0), fac(1); // 分别用 0 与 1 初始化 ans 与
-    int m;
-    cin >> m;
-    for (int i = 1; i <= m; i++)
+    Bigint f[5010];
+    int N;
+    cin >> N;
+    f[1] = Bigint(1);
+    f[2] = Bigint(2);
+    for (int i = 3; i <= N; i++)
     {
-        fac = fac * i;
-        ans = ans + fac; // ans1 和 ans2 是 Bigint 类型，编译器会自动选择定义的 operator+
+        f[i] = f[i - 1] + f[i - 2];
     }
-    ans.print();
+    f[N].print();
+    return 0;
 }
