@@ -17,7 +17,8 @@
       "p1042": "cpp",
       "ios": "cpp",
       "complex": "cpp",
-      "ratio": "cpp"
+      "ratio": "cpp",
+      "random": "cpp"
     }
   }
 }
