@@ -11,7 +11,7 @@ struct coin
 
 bool cmp(coin x, coin y)
 {
-    return x.v * y.m > y.v * x.m;
+    return x.v * y.m > y.v * x.m; // 判断性价比时规避浮点数与除法，加快速度且提升精度
 }
 
 int main()

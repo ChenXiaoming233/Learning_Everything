@@ -45,3 +45,29 @@ fun GreetingPreview() {
         Greeting("Android")
     }
 }
+
+fun main() {
+    val jack = Person("Jack", 19)
+    jack.eat()
+    val tom = Student("001", 10, "Tom", 20)
+    tom.learn()
+    val tim = Student("Cook", 70)
+    tim.learn()
+    tim.eat()
+
+    val amy = Student("Amy", 19)
+    doStudy(amy)
+
+    val cellphone1 = Cellphone("Samsung",1999.0)
+    val cellphone2 = Cellphone("Xiaomi",1999.0)
+    println(cellphone1)
+    println("cellphone1 equals cellphone2 " + (cellphone1 == cellphone2))
+
+    Singleton.singletonTest()
+
+}
+
+fun doStudy(study: Study){
+    study.readBooks()
+    study.doHomework()
+}
