@@ -1,3 +1,5 @@
+import java.util.Locale
+import java.util.Locale.getDefault
 import kotlin.math.max
 
 // TIP 要<b>运行</b>代码，请按 <shortcut actionId="Run"/> 或
@@ -58,8 +60,9 @@ open class Person { // open 关键字令对象可继承
 class Student(
     val sno: String,
     val grade: Int,
-) : Person() /* 继承 Perosn 类，空括号表示 Student 类的主构造函数初始化时调用 Perosn 类的无参构造函数 */ {
-    init { // init 结构体，用于在主构造函数中编写逻辑，执行顺序：主构造函数参数（属性初始化器） -> init 结构体 -> 次构造函数
+) : Person() { // 继承 Perosn 类，空括号表示 Student 类的主构造函数初始化时调用 Perosn 类的无参构造函数
+    // init-结构体，用于在主构造函数中编写逻辑，执行顺序：主构造函数参数（属性初始化器） -> init 结构体 -> 次构造函数
+    init {
         println("sno is $sno")
         println("grade is $grade")
     }
@@ -82,7 +85,7 @@ class Student2(
     val grade: Int,
     name: String,
     age: Int,
-) /* 增加 name 与 age 且不能声明为 val/var，否则属性冲突 */ : Person2(name, age) {
+) : Person2(name, age) { // 增加 name 与 age 且不能声明为 val/var，否则属性冲突
     init {
         println("name is $name")
         println("age is $age")
@@ -100,12 +103,12 @@ class Student3(
     name: String,
     age: Int,
 ) : Person2(name, age) {
-    // 所有的次构造函数都必须直接或间接委托给主构造函数
-    constructor(name: String, age: Int) /* 接受 name 与 age 参数 */ :
-        this("", 0, name, age) /* 通过 this 调用主构造函数并对 sno 与 grade 赋初始值 */ {
+    // constructor-次构造函数，所有的次构造函数都必须直接或间接委托给主构造函数
+    constructor(name: String, age: Int) : // 接受 name 与 age 参数
+        this("", 0, name, age) { // this 调用主构造函数并对 sno 与 grade 赋初始值
     }
     constructor() :
-        this("", 0) /* 调用第一个次构造函数并对 name 与 age 赋初始值 */ {
+        this("", 0) { // 调用第一个次构造函数并对 name 与 age 赋初始值
     }
 }
 
@@ -114,8 +117,9 @@ val student3 = Student3("Jack", 19)
 val student4 = Student3("a123", 5, "Jack", 19)
 
 // 只有次构造函数，没有主构造函数（但一定有一个构造函数）
-class Student4 : Person2 /* 由于 Student4 类没有主构造函数，因而继承 Person2 类时也不用加括号 */ {
-    constructor(name: String, age: Int) : super(name, age) /* Student4 类没有主构造函数，通过 super 关键字调用父类的构造函数 */ {
+class Student4 : Person2 { // 由于 Student4 类没有主构造函数，因而继承 Person2 类时也不用加括号
+    constructor(name: String, age: Int) :
+        super(name, age) { // Student4 类没有主构造函数，通过 super 关键字调用父类的构造函数
     }
 }
 
@@ -125,7 +129,7 @@ class Student5(
     age: Int,
 ) : Person2(name, age),
     Study {
-    override /* override 关键字重写父类或实现接口函数 */ fun readBooks() {
+    override fun readBooks() { // override 关键字重写父类或实现接口函数
         println(name + " is reading.")
     }
 
@@ -134,14 +138,14 @@ class Student5(
     }
 }
 
-fun doStudy(study: Study) /* 接受任何 Study 接口的实现类对象 */ {
-    study.readBooks()
-    study.doHomework()
+fun doStudy(student: Study) { // 接受任何 Study 接口的实现类对象
+    student.readBooks()
+    student.doHomework()
 }
 
 // [集合的创建与遍历]
 fun fruit() {
-    val fruitList = listOf("Apple") // listOf() 创建的集合不可变
+    val fruitList = listOf("Apple", "Banana") // listOf() 创建的集合不可变
     for (fruit in fruitList) {
         println(fruit)
     }
@@ -151,19 +155,66 @@ fun fruit() {
     val fruitSet = setOf("Apple", "Banana")
     val fruitSet2 = mutableSetOf("Apple", "Banana")
 
-    val fruitMap = HashMap<String, Int>()
-    fruitMap["Apple"] = 1
-    val fruitMap2 = mutableMapOf<String, Int>("Apple" to 1)
-    for ((fruit, number) in fruitMap2) {
-        println(fruit + ", " + number)
+    val map = mapOf("Apple" to 1, "Banana" to 2)
+    for ((fruit, number) in map) {
+        println("fruit " + fruit + "is " + number)
     }
 }
 
-// [函数式 API]
+// [集合的函数式 API]
+// 函数式 api 类似 c++ 中的 stl
 fun fruit2() {
     val list = listOf("Apple", "Banana", "Orange", "Pear", "Grape", "Watermelon")
     val maxLengthFruit = list.maxBy { it.length }
+    val maxLengthFruit1 = list.maxBy({ fruit: String -> fruit.length }) // 完整 Lambda
     println("max length fruit is " + maxLengthFruit)
+
+    // map 函数式 api, 将集合中的每个元素都映射成另一个值，映射规则在 Lambda 中指定
+    val newList = list.map { it.uppercase(getDefault()) }
+    // filter 函数式 api, 过滤集合中的数据
+    val newList1 =
+        list
+            .filter { it.length < 5 }
+            .map { it.uppercase(getDefault()) }
+    // any 函数式 api, 判断集合中是否存在至少一个元素满足条件
+    val newList2 = list.any { it.length <= 5 }
+    // all 函数式 api, 判断集合中是否所有元素都满足条件
+    val newList3 = list.all { it.length <= 5 }
+}
+
+// 可空类型系统
+fun doStudy2(student: Student5?) { // 类型后接 ? 允许类型可空
+    if (student != null) { // 须处理可能的空指针异常
+        student.readBooks()
+        student.eat()
+    }
+}
+
+fun doStudy3(student: Student5?) {
+    student?.eat() // ?. 为安全调用操作符，对象为空时整个表达式返回 null，不会继续调用后面的方法
+}
+
+fun getTextLengtht(text: String?) = text?.length ?: 0
+
+var content: String? = "hello"
+
+fun toUpperCase() {
+    var upperCase = content!!.uppercase(getDefault()) // 此时函数内部无法检出外部的判空操作，需使用非空断言工具绕过空指针检查
+    println(upperCase)
+}
+
+fun printUpperCase() {
+    if (content != null) {
+        toUpperCase()
+    }
+}
+
+fun doStudy4(student: Study?) {
+    student?.let {
+        // let 函数式 api, 将原始调用对象作为参数传递到 Lambda 表达式中
+        it.readBooks()
+        it.doHomework()
+    }
 }
 
 fun main() {
