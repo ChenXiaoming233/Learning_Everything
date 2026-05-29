@@ -14,12 +14,14 @@ public:
     // 带参构造
     IntArray(int n) : cap(n)
     {
-        if (n > 0) {
+        if (n > 0)
+        {
             data = new int[n];
-            for (int i = 0; i < n; i++) data[i] = 0;
-        } else {
-            data = nullptr;
+            for (int i = 0; i < n; i++)
+                data[i] = 0;
         }
+        else
+            data = nullptr;
     }
 
     // 拷贝构造
@@ -27,9 +29,7 @@ public:
     {
         data = (cap > 0) ? new int[cap] : nullptr;
         for (int i = 0; i < cap; i++)
-        {
             data[i] = other.data[i];
-        }
     }
 
     // 赋值
@@ -37,13 +37,14 @@ public:
     {
         delete[] data;
         cap = other.cap;
-        if (cap > 0) {
+        if (cap > 0)
+        {
             data = new int[cap];
             for (int i = 0; i < cap; i++)
                 data[i] = other.data[i];
-        } else {
-            data = nullptr;
         }
+        else
+            data = nullptr;
         return *this;
     }
 
