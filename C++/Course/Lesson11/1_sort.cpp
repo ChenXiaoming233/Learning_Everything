@@ -18,27 +18,27 @@ bool operator<(const Student &a, const Student &b)
 }
 
 template <typename T>
-void sort_template(T a[], int n)
+void sort1(T a[], int n)
 {
     sort(a, a + n);
 }
 
 int main()
 {
-    int numbers[] = {5, 2, 9, 1, 7};
-    int count = sizeof(numbers) / sizeof(numbers[0]);
-    sort_template(numbers, count);
+    int nunbers[] = {5, 2, 9, 1, 7};
+    int numbersCount = 5;
+    sort1(nunbers, numbersCount);
 
-    float scores[] = {3.5f, 1.2f, 4.8f, 2.1f};
-    int scoreCount = sizeof(scores) / sizeof(scores[0]);
-    sort_template(scores, scoreCount);
+    float scores[] = {3.5, 1.2, 4.8, 2.1};
+    int scoresCount = 4;
+    sort1(scores, scoresCount);
 
     Student students[] = {
         {"Alice", 20},
         {"Bob", 19},
         {"Alice", 18}};
-    int studentCount = sizeof(students) / sizeof(students[0]);
-    sort_template(students, studentCount);
+    int studentCount = 3;
+    sort1(students, studentCount);
 
     return 0;
 }
