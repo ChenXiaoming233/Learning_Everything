@@ -403,3 +403,5 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,c,c++,kotlin,android,python,git,visualstudiocode
+# 本地保留、不入库：超出 GitHub 单文件 100MB 限制
+Cybersecurity/Task1/第一讲 Linux基础操作与权限管理（复习版）.pdf
