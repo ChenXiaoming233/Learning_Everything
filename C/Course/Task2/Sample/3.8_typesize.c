@@ -1,7 +1,7 @@
 #include <stdio.h>
 int main(void)
 {
-    /* C99ÎªÀàĞÍ´óĞ¡Ìá¹©%zd×ª»»ËµÃ÷ */
+    /* C99ä¸ºç±»å‹å¤§å°æä¾›%zdè½¬æ¢è¯´æ˜ */
     printf("Type int has a size of %zd bytes.\n", sizeof(int));
     printf("Type char has a size of %zd bytes.\n", sizeof(char));
     printf("Type long has a size of %zd bytes.\n", sizeof(long));

@@ -1,9 +1,9 @@
-/* print2.c -- ¸ü¶àprintf()µÄÌØĞÔ */
+/* print2.c -- æ›´å¤šprintf()çš„ç‰¹æ€§ */
 #include <stdio.h>
 
 int main(void)
 {
-    unsigned int un = 3000000000;   /* intÎª32Î»ºÍshortÎª16Î»µÄÏµÍ³ */
+    unsigned int un = 3000000000;   /* intä¸º32ä½å’Œshortä¸º16ä½çš„ç³»ç»Ÿ */
     short end = 200;
     long big = 65537;
     long long verybig = 12345678908642;

@@ -4,13 +4,13 @@
 int main(void)
 {
     int i = 2147483647;
-    printf("ÕûÊıÉÏÒç: %d + 1 = %d\n", i, i + 1);
+    printf("æ•´æ•°ä¸Šæº¢: %d + 1 = %d\n", i, i + 1);
 
     float f = FLT_MAX;
-    printf("¸¡µãÊıÉÏÒç: %e * 10 = %e\n", f, f * 10.0f);
+    printf("æµ®ç‚¹æ•°ä¸Šæº¢: %e * 10 = %e\n", f, f * 10.0f);
 
     float g = FLT_MIN;
-    printf("¸¡µãÊıÏÂÒç: %e / 1e10 = %e\n", g, g / 1e10f);
+    printf("æµ®ç‚¹æ•°ä¸‹æº¢: %e / 1e10 = %e\n", g, g / 1e10f);
 
     return 0;
 }

@@ -8,7 +8,7 @@ int main(void)
     printf("%f can be written %e\n", aboat, aboat);
     printf("%f can be written %e\n", abet, abet);
     printf("%Lf can be written %Le\n", dip, dip);   
-	/* long double ÓÃ %Lf/%Le */
+	/* long double ç”¨ %Lf/%Le */
 	
     return 0;
 }

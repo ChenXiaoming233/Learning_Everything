@@ -4,9 +4,9 @@
 int main(void)
 {
     float f;
-    f = 123.456f;                 /* ÓÃ f ºó×ºÃ÷È·±íÊ¾ float ×ÖÃæÁ¿ */
+    f = 123.456f;                 /* ç”¨ f åç¼€æ˜ç¡®è¡¨ç¤º float å­—é¢é‡ */
 
-    if (fabs((double)f - 123.456) < 1e-6)   /* ÓÃÈİ²î±È½Ï */
+    if (fabs((double)f - 123.456) < 1e-6)   /* ç”¨å®¹å·®æ¯”è¾ƒ */
         printf("f is equal to 123.456 indeed.\n");
     else
         printf("In fact, f is equal to %f\n", f);

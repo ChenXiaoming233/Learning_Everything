@@ -2,8 +2,8 @@
 int main(void)
 {
     int age;
-    printf("ÊäÈëÄêÁä: ");
+    printf("è¾“å…¥å¹´é¾„: ");
     scanf("%d", &age);
-    printf("ÄêÁä¶ÔÓ¦µÄÃëÊı: %e\n", age * 3.156e7);
+    printf("å¹´é¾„å¯¹åº”çš„ç§’æ•°: %e\n", age * 3.156e7);
     return 0;
 }

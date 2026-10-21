@@ -2,8 +2,8 @@
 int main(void)
 {
     float quarts;
-    printf("ÊäÈëË®µÄ¿äÍÑÊı: ");
+    printf("è¾“å…¥æ°´çš„å¤¸è„±æ•°: ");
     scanf("%f", &quarts);
-    printf("Ë®·Ö×ÓµÄÊıÁ¿: %e\n", quarts * 950.0 / 3.0e-23);
+    printf("æ°´åˆ†å­çš„æ•°é‡: %e\n", quarts * 950.0 / 3.0e-23);
     return 0;
 }

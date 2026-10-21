@@ -3,11 +3,11 @@
 int main(void)
 {
     float cups;
-    printf("ÇëÊäÈë±­Êı: ");
+    printf("è¯·è¾“å…¥æ¯æ•°: ");
     scanf("%f", &cups);
-    printf("Æ·ÍÑ: %.2f\n", cups / 2);
-    printf("°»Ë¾: %.2f\n", cups * 8);
-    printf("´óÌÀÉ×: %.2f\n", cups * 8 * 2);
-    printf("²èÉ×: %.2f\n", cups * 8 * 2 * 3);
+    printf("å“è„±: %.2f\n", cups / 2);
+    printf("ç›å¸: %.2f\n", cups * 8);
+    printf("å¤§æ±¤å‹º: %.2f\n", cups * 8 * 2);
+    printf("èŒ¶å‹º: %.2f\n", cups * 8 * 2 * 3);
     return 0;
 }
