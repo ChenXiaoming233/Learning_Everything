@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="福州大学校园主页示例，包含校园简介、校园数据和留言板。">
+  <title>福州大学 | 校园主页</title>
+  <style>
+    :root {
+      --ink: #17202a;
+      --muted: #5c6873;
+      --navy: #102a43;
+      --blue: #1f5f8b;
+      --red: #b23a48;
+      --paper: #f7f8f6;
+      --line: #d9e0e5;
+      --white: #ffffff;
+      --focus: #f0a202;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.6;
+    }
+    a { color: inherit; }
+    img { display: block; max-width: 100%; }
+    .skip-link { position: absolute; left: -9999px; }
+    .skip-link:focus { left: 16px; top: 12px; z-index: 10; padding: 8px 12px; background: var(--white); }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: rgba(255, 255, 255, .96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+    }
+    .header-inner, .section-inner { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+    .header-inner { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; font-weight: 700; color: var(--navy); }
+    .brand img { width: 48px; height: 30px; object-fit: contain; }
+    .brand span { letter-spacing: .02em; }
+    .main-nav { display: flex; align-items: center; gap: 24px; }
+    .main-nav a { color: var(--muted); text-decoration: none; font-size: .95rem; }
+    .main-nav a:hover, .main-nav a:focus { color: var(--red); }
+
+    .hero {
+      min-height: 480px;
+      display: grid;
+      align-items: end;
+      background: url("campus-hero.jpg") center / cover no-repeat;
+      position: relative;
+      isolation: isolate;
+    }
+    .hero::before { content: ""; position: absolute; inset: 0; background: rgba(10, 28, 43, .62); z-index: -1; }
+    .hero-content { width: min(1120px, calc(100% - 40px)); margin: 0 auto; padding: 90px 0 72px; color: var(--white); }
+    .eyebrow { margin: 0 0 12px; color: #f7d488; font-size: .82rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+    h1 { max-width: 720px; margin: 0; font-size: clamp(2.4rem, 6vw, 4.8rem); line-height: 1.08; letter-spacing: .01em; }
+    .hero-copy { max-width: 620px; margin: 22px 0 0; color: #e8eef2; font-size: 1.1rem; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 9px 18px; border: 1px solid transparent; border-radius: 4px; font: inherit; font-weight: 700; text-decoration: none; cursor: pointer; }
+    .button-primary { background: #f0a202; color: #17202a; }
+    .button-secondary { border-color: rgba(255,255,255,.7); color: var(--white); background: transparent; }
+    .button:hover, .button:focus { filter: brightness(1.06); }
+    :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+
+    .section { padding: 82px 0; }
+    .section:nth-of-type(even) { background: var(--white); }
+    .section-heading { max-width: 680px; margin-bottom: 34px; }
+    .section-kicker { margin: 0 0 8px; color: var(--red); font-size: .82rem; font-weight: 800; letter-spacing: .14em; }
+    h2 { margin: 0; color: var(--navy); font-size: clamp(1.8rem, 3vw, 2.6rem); line-height: 1.2; }
+    .section-heading p { margin: 12px 0 0; color: var(--muted); }
+    .about-grid { display: grid; grid-template-columns: 1.08fr .92fr; gap: 48px; align-items: center; }
+    .about-image { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 4px; }
+    .about-copy p { margin-top: 0; color: var(--muted); }
+    .facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; margin: 26px 0 0; background: var(--line); border: 1px solid var(--line); }
+    .fact { padding: 16px; background: var(--white); }
+    .fact strong { display: block; color: var(--navy); font-size: 1.45rem; }
+    .fact span { color: var(--muted); font-size: .88rem; }
+
+    .updates { display: grid; grid-template-columns: 1.15fr .85fr; gap: 24px; }
+    .update-list { border-top: 2px solid var(--navy); }
+    .update-item { display: grid; grid-template-columns: 120px 1fr; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+    .update-item time { color: var(--red); font-variant-numeric: tabular-nums; }
+    .update-item p { margin: 0; }
+    .notice { padding: 24px; border-left: 4px solid var(--red); background: #fff5f3; }
+    .notice h3 { margin: 0 0 8px; color: var(--navy); }
+    .notice p { margin: 0; color: var(--muted); }
+
+    .guestbook-grid { display: grid; grid-template-columns: minmax(260px, .75fr) minmax(0, 1.25fr); gap: 48px; align-items: start; }
+    .guestbook-form { padding: 24px; background: var(--paper); border: 1px solid var(--line); border-radius: 4px; }
+    .field { display: grid; gap: 6px; margin-bottom: 18px; }
+    label { font-weight: 700; color: var(--navy); }
+    input, textarea { width: 100%; padding: 11px 12px; border: 1px solid #bac5cf; border-radius: 3px; background: var(--white); color: var(--ink); font: inherit; }
+    textarea { min-height: 130px; resize: vertical; }
+    .form-note { margin: 12px 0 0; color: var(--muted); font-size: .84rem; }
+    .status { min-height: 1.6em; margin: 12px 0 0; color: var(--red); font-size: .9rem; }
+    .messages { display: grid; gap: 14px; }
+    .message { padding: 18px; border: 1px solid var(--line); background: var(--white); border-radius: 4px; }
+    .message-head { display: flex; justify-content: space-between; gap: 16px; color: var(--navy); font-weight: 700; }
+    .message time { color: var(--muted); font-size: .82rem; font-weight: 400; white-space: nowrap; }
+    .message p { margin: 8px 0 0; color: var(--muted); white-space: pre-wrap; overflow-wrap: anywhere; }
+    .empty { margin: 0; color: var(--muted); }
+
+    .site-footer { padding: 28px 0; background: var(--navy); color: #dbe7ef; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 20px; align-items: center; }
+    .footer-inner p { margin: 0; font-size: .9rem; }
+    .footer-inner a { color: #f7d488; }
+
+    @media (max-width: 760px) {
+      .header-inner { align-items: flex-start; padding: 14px 0; flex-direction: column; gap: 10px; }
+      .main-nav { width: 100%; justify-content: space-between; gap: 10px; }
+      .main-nav a { font-size: .88rem; }
+      .hero { min-height: 520px; }
+      .hero-content { padding-bottom: 52px; }
+      .section { padding: 58px 0; }
+      .about-grid, .updates, .guestbook-grid { grid-template-columns: 1fr; gap: 28px; }
+      .update-item { grid-template-columns: 92px 1fr; gap: 12px; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#about">跳转到主要内容</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#top" aria-label="返回福州大学主页顶部">
+        <img src="fzu-logo.png" alt="福州大学校徽">
+        <span>福州大学</span>
+      </a>
+      <nav class="main-nav" aria-label="主导航">
+        <a href="#about">校园简介</a>
+        <a href="#updates">校园动态</a>
+        <a href="#guestbook">留言板</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-content">
+        <p class="eyebrow">Fuzhou University · Since 1958</p>
+        <h1 id="hero-title">明德至诚，博学远志</h1>
+        <p class="hero-copy">在福州这座山海相拥的城市，连接求知、实践与同行者，记录属于福大的校园日常。</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#about">认识福大</a>
+          <a class="button button-secondary" href="#guestbook">写下留言</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about" aria-labelledby="about-title">
+      <div class="section-inner">
+        <div class="section-heading">
+          <p class="section-kicker">ABOUT FZU</p>
+          <h2 id="about-title">一所与城市共同成长的大学</h2>
+          <p>福州大学创建于 1958 年，是国家“双一流”建设高校和国家“211 工程”重点建设大学。这里既有严谨的学术训练，也有面向海峡西岸发展的实践现场。</p>
+        </div>
+        <div class="about-grid">
+          <img class="about-image" src="campus.jpg" alt="校园建筑与绿地">
+          <div class="about-copy">
+            <p>从旗山校区的晨光到实验室里的深夜，校园生活由一段段具体而微的学习经历组成。主页保留这些日常入口，让访客快速了解学校，也让同学们留下自己的声音。</p>
+            <div class="facts" aria-label="福州大学公开信息摘要">
+              <div class="fact"><strong>1958</strong><span>学校创建年份</span></div>
+              <div class="fact"><strong>211</strong><span>国家重点建设高校</span></div>
+              <div class="fact"><strong>福州</strong><span>学校所在地</span></div>
+              <div class="fact"><strong>旗山</strong><span>主校区所在区域</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="updates" aria-labelledby="updates-title">
+      <div class="section-inner">
+        <div class="section-heading">
+          <p class="section-kicker">CAMPUS NOTES</p>
+          <h2 id="updates-title">校园动态</h2>
+          <p>把学校新闻、学习提醒和校园观察放在同一条时间线上，方便快速浏览。</p>
+        </div>
+        <div class="updates">
+          <div class="update-list">
+            <article class="update-item"><time datetime="2026-09-01">09 / 01</time><p>新学期课程与社团活动陆续开放报名。</p></article>
+            <article class="update-item"><time datetime="2026-09-12">09 / 12</time><p>图书馆延长开放时间，欢迎同学预约自习座位。</p></article>
+            <article class="update-item"><time datetime="2026-09-20">09 / 20</time><p>校园开放日将安排实验室参观与专业咨询。</p></article>
+          </div>
+          <aside class="notice">
+            <h3>今日提示</h3>
+            <p>提交留言前请勿填写身份证号、手机号、密码等敏感信息。本页面的留言仅保存在当前浏览器中。</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="guestbook" aria-labelledby="guestbook-title">
+      <div class="section-inner">
+        <div class="section-heading">
+          <p class="section-kicker">GUESTBOOK</p>
+          <h2 id="guestbook-title">给校园写一条留言</h2>
+          <p>留下你对校园、课程或社团生活的观察，提交后会立即出现在右侧列表。</p>
+        </div>
+        <div class="guestbook-grid">
+          <form class="guestbook-form" id="guestbook-form">
+            <div class="field">
+              <label for="nickname">昵称</label>
+              <input id="nickname" name="nickname" maxlength="20" required placeholder="例如：小福">
+            </div>
+            <div class="field">
+              <label for="message">留言内容</label>
+              <textarea id="message" name="message" maxlength="240" required placeholder="写下你想分享的一句话"></textarea>
+            </div>
+            <button class="button button-primary" type="submit">提交留言</button>
+            <p class="form-note">最多 20 个字符的昵称，留言最多 240 个字符。</p>
+            <p class="status" id="form-status" role="status" aria-live="polite"></p>
+          </form>
+          <div class="messages" id="messages" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="section-inner footer-inner">
+      <p>福州大学校园主页 · 校园信息与留言平台</p>
+      <p><a href="https://www.fzu.edu.cn/" target="_blank" rel="noreferrer">访问福州大学官网</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const form = document.querySelector('#guestbook-form');
+    const messages = document.querySelector('#messages');
+    const status = document.querySelector('#form-status');
+    const storageKey = 'fzu-homepage-messages';
+    const starterMessages = [
+      { nickname: '福小研', message: '在旗山校区看了一场很漂亮的晚霞。', createdAt: '2026-08-20T18:30:00+08:00' },
+      { nickname: '新同学', message: '希望在这里认识更多一起学习的朋友。', createdAt: '2026-08-20T19:05:00+08:00' }
+    ];
+
+    function readMessages() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(storageKey));
+        return Array.isArray(saved) ? saved : starterMessages;
+      } catch {
+        return starterMessages;
+      }
+    }
+
+    function formatDate(value) {
+      return new Intl.DateTimeFormat('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).format(new Date(value));
+    }
+
+    function renderMessages() {
+      const items = readMessages();
+      messages.replaceChildren();
+      if (!items.length) {
+        const empty = document.createElement('p');
+        empty.className = 'empty';
+        empty.textContent = '还没有留言，来写第一条吧。';
+        messages.append(empty);
+        return;
+      }
+      items.slice().reverse().forEach((item) => {
+        const article = document.createElement('article');
+        article.className = 'message';
+        const header = document.createElement('div');
+        header.className = 'message-head';
+        const name = document.createElement('span');
+        name.textContent = item.nickname;
+        const time = document.createElement('time');
+        time.dateTime = item.createdAt;
+        time.textContent = formatDate(item.createdAt);
+        header.append(name, time);
+        const content = document.createElement('p');
+        content.textContent = item.message;
+        article.append(header, content);
+        messages.append(article);
+      });
+    }
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const data = new FormData(form);
+      const nickname = data.get('nickname').trim();
+      const message = data.get('message').trim();
+      if (!nickname || !message) {
+        status.textContent = '请填写昵称和留言内容。';
+        return;
+      }
+      const items = readMessages();
+      items.push({ nickname, message, createdAt: new Date().toISOString() });
+      localStorage.setItem(storageKey, JSON.stringify(items));
+      form.reset();
+      status.textContent = '留言已提交。';
+      renderMessages();
+    });
+
+    renderMessages();
+  </script>
+</body>
+</html>

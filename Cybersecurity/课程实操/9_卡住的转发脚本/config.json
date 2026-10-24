@@ -1,0 +1,15 @@
+{
+  "api_base": "http://web-b773c64916.adworld.xctf.org.cn",
+  "event_count": 3,
+  "transform": {
+    "target_path": "payload.route",
+    "operation": "prefix",
+    "prefix": "fzy5figc-",
+    "required_field": "payload.reviewed",
+    "required_value": true
+  },
+  "retry_statuses": [
+    503
+  ],
+  "result_file": "result.json"
+}
