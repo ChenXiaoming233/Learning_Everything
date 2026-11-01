@@ -2,8 +2,8 @@
     "tasks": [
         {
             "type": "cppbuild",
-            "label": "C/C++: gcc.exe 生成活动文件",
-            "command": "D:\\Program Files\\mingw64\\bin\\gcc.exe",
+            "label": "C/C++: clang.exe 生成活动文件",
+            "command": "C:\\Users\\Ming\\AppData\\Local\\Programs\\llvm-mingw\\bin\\clang.exe",
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",

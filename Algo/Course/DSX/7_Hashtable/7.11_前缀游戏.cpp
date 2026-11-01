@@ -1,38 +1,27 @@
-/*
-Problem: DSX 7.11 Prefix Game
+// Problem: 数据结构 散列表7.11 前缀游戏
+// Idea: Sort all dictionary strings. Every set of strings sharing a prefix is a
+// contiguous range. Binary search the prefix and the lexicographic successor of
+// the prefix, then subtract the two positions.
+// Complexity: O(n log n * L + m log n * L), where L is the maximum string length.
 
-Given n strings, answer m queries. For each query, output how many of the
-given strings have that query string as a prefix.
-
-Idea:
-Build a trie. Each node stores how many inserted strings pass through it, so
-the count at the node reached by a query is exactly its answer.
-
-The trie uses adjacency lists instead of a 26-int array per node. A full
-26-array trie can use about 150 MB at the maximum input size, which exceeds
-the 102400 KB memory limit.
-
-Complexity:
-O(26 * total input length) time in the worst case, which is O(total input
-length) with the fixed alphabet size. O(total input length) memory.
-*/
-
+#include <algorithm>
 #include <iostream>
 #include <string>
 #include <vector>
-
 using namespace std;
 
-struct Node {
-    int head = -1;
-    int count = 0;
-};
+string nextPrefix(string prefix) {
+    int pos = static_cast<int>(prefix.size()) - 1;
+    while (pos >= 0 && prefix[pos] == 'z') 
+        --pos;
+    
+    if (pos < 0) 
+        return "";
 
-struct Edge {
-    int to;
-    int next;
-    char ch;
-};
+    ++prefix[pos];
+    prefix.resize(pos + 1);
+    return prefix;
+}
 
 int main() {
     ios::sync_with_stdio(false);
@@ -41,59 +30,25 @@ int main() {
     int n;
     cin >> n;
 
-    vector<Node> nodes(1);
-    vector<Edge> edges;
-
-    // At most 50000 * 30 characters can create trie edges.
-    nodes.reserve(1500001);
-    edges.reserve(1500000);
-
-    auto findChild = [&](int node, char ch) {
-        for (int edge = nodes[node].head; edge != -1; edge = edges[edge].next) {
-            if (edges[edge].ch == ch) {
-                return edges[edge].to;
-            }
-        }
-        return -1;
-    };
-
-    for (int i = 0; i < n; ++i) {
-        string s;
-        cin >> s;
-
-        int node = 0;
-        ++nodes[node].count;
-
-        for (char ch : s) {
-            int child = findChild(node, ch);
-            if (child == -1) {
-                child = static_cast<int>(nodes.size());
-                nodes.emplace_back();
-                edges.push_back({child, nodes[node].head, ch});
-                nodes[node].head = static_cast<int>(edges.size()) - 1;
-            }
-
-            node = child;
-            ++nodes[node].count;
-        }
-    }
+    vector<string> words(n);
+    for (string& word : words) 
+        cin >> word;
+    
+    sort(words.begin(), words.end());
 
     int m;
     cin >> m;
-
-    while (m--) {
+    for (int i = 0; i < m; ++i) {
         string query;
         cin >> query;
 
-        int node = 0;
-        for (char ch : query) {
-            node = findChild(node, ch);
-            if (node == -1) {
-                break;
-            }
+        auto first = lower_bound(words.begin(), words.end(), query);
+        string upperPrefix = nextPrefix(query);
+        auto last = words.end();
+        if (!upperPrefix.empty()) {
+            last = std::lower_bound(words.begin(), words.end(), upperPrefix);
         }
-
-        cout << (node == -1 ? 0 : nodes[node].count) << '\n';
+        cout << static_cast<int>(last - first) << '\n';
     }
 
     return 0;

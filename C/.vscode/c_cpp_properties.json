@@ -10,10 +10,10 @@
                 "UNICODE",
                 "_UNICODE"
             ],
-            "compilerPath": "D:\\Program Files\\mingw64\\bin\\gcc.exe",
+            "compilerPath": "C:\\Users\\Ming\\AppData\\Local\\Programs\\llvm-mingw\\bin\\clang.exe",
             "cStandard": "c17",
             "cppStandard": "gnu++17",
-            "intelliSenseMode": "windows-gcc-x64"
+            "intelliSenseMode": "windows-clang-x64"
         }
     ],
     "version": 4
